@@ -1,0 +1,54 @@
+{
+  "entities": {
+    "Book": {
+      "title": "Book",
+      "description": "E-book product details",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "kiwifyLink": { "type": "string" },
+        "coverUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "timestamp" }
+      },
+      "required": ["title", "price", "kiwifyLink", "createdAt"]
+    },
+    "Post": {
+      "title": "Post",
+      "description": "Blog post about skincare",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "coverUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "timestamp" }
+      },
+      "required": ["title", "content", "createdAt"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "Administrator roles",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" },
+        "createdAt": { "type": "string", "format": "timestamp" }
+      },
+      "required": ["email", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/books/{bookId}": {
+      "schema": { "$ref": "#/entities/Book" },
+      "description": "Stores all e-products"
+    },
+    "/posts/{postId}": {
+      "schema": { "$ref": "#/entities/Post" },
+      "description": "Stores all blog posts"
+    },
+    "/admins/{userId}": {
+      "schema": { "$ref": "#/entities/Admin" },
+      "description": "Whitelisted admins by UID"
+    }
+  }
+}

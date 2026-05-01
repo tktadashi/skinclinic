@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// Regras de segurança para o Firebase Storage - SkinClinicDirect
+service firebase.storage {
+  match /b/{bucket}/o {
+  
+    // Verifica se o usuário está autenticado
+    function isSignedIn() { return request.auth != null; }
+    
+    // Verifica se o usuário autenticado é o Administrador pelo e-mail
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email == 'pwglobalwf@gmail.com';
+    }
+
+    match /{allPaths=**} {
+      // Leitura Pública: Qualquer pessoa pode visualizar as capas dos e-books e posts na vitrine
+      allow read: if true;
+      
+      // Escrita Restrita: Apenas o Administrador pode fazer upload, editar ou excluir imagens
+      allow write: if isAdmin();
+    }
+  }
+}
